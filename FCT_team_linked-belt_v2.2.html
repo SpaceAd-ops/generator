@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCT-Team Code Generator</title>
+<link rel="icon" href="https://i.ibb.co/QJD5Qsp/linked-belt16-16.png" type="image/png">
+<style>
+    @font-face {
+        font-family: "PixelFont";
+        src: url("https://fonts.cdnfonts.com/s/19687/PressStart2P-Regular.woff") format("woff");
+    }
+    body {
+        font-family: "PixelFont", Arial, sans-serif;
+        background: #1e1e1e;
+        color: #E0FFFF;
+        margin: 15;
+        padding: 0;
+    } 
+    .block {
+        margin: 15px;
+        border: 1px solid #A0522D;
+        background: #2c2c2c;
+        box-shadow: 2px 2px 4px #000;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    textarea {
+        width: 100%;
+        height: 142px;
+        font-family: "PixelFont", monospace;
+		font-size: 12px;
+        background: #262626;
+        color: #ff8400;
+        border: 2px solid #606060;
+    }
+    button {
+        background: #404040;
+        color: #ffffff;
+        font-family: "PixelFont", Arial, sans-serif;
+        font-size: 14px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-shadow: 1px 1px 0px #000;
+    }
+    button:hover {
+        background: #ff8400;
+    }
+    h1 {
+        margin-left: 20px;
+        font-size: 24px;
+        color: #ff8400;
+        text-shadow: 2px 2px 1px #000;
+    }
+</style>
+</head>
+<body>
+    <h1>Linked-Belt By FCT-team</h1>
+    <div class="block">
+    <img src="https://i.ibb.co/TkvMNSL/linkbelt2.png" style="width: 50px; height: 25px;" />
+        <label for="nameInput1">Конвейер погрузки:</label>
+        <input type="text" id="nameInput1" placeholder="1-Тег конвейера" />
+        <button id="copyButton1">Скопировать код</button>
+    <textarea id="codeArea1" readonly>
+      🐞YouTube: youtube.com/@FCT-Ostin
+      💙Telegram: t.me/FCTostin
+      🎮Steam Группа: steamcommunity.com/groups/FCTgroup
+      🕹️Patreon: www.patreon.com/c/OstinFCT
+      🪐Boosty: boosty.to/ostinfct
+    </textarea>
+    </div>
+
+    <div class="block">
+    <img src="https://i.ibb.co/WpWXL1g/linkbelt1.png" style="width: 50px; height: 25px;" />
+        <label for="nameInput2">Конвейер разгрузки:</label>
+        <input type="text" id="nameInput2" placeholder="2-Тег конвейера" />
+        <button id="copyButton2">Скопировать код</button>
+        <textarea id="codeArea2" readonly></textarea>
+    </div>
+
+    <div class="block">
+    <img src="https://i.ibb.co/tqGNcfX/linkbelt3.png" style="width: 60px; height: 25px;" />
+        <label for="nameInput3">Код обьеденения конвейеров:</label>
+        <textarea id="codeArea3" readonly style="height: 110px; font-size: 14px;" ></textarea>
+        <button id="copyButton3">Скопировать код</button>
+    </div>
+Руководство: <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3392327413 " target="_blank">Как настроить Связанные конвейеры</a></p>
+    <script>
+        const nameInput1 = document.getElementById('nameInput1');
+        const codeArea1 = document.getElementById('codeArea1');
+        const copyButton1 = document.getElementById('copyButton1');
+
+        const nameInput2 = document.getElementById('nameInput2');
+        const codeArea2 = document.getElementById('codeArea2');
+        const copyButton2 = document.getElementById('copyButton2');
+
+        const codeArea3 = document.getElementById('codeArea3');
+        const copyButton3 = document.getElementById('copyButton3');
+
+        const originalCode1 = `/c
+local player = game.players[1]
+local position = player.position
+local offset = {x = 0, y = -1}
+local chest_position = {x = position.x + offset.x, y = position.y + offset.y}
+local entity = player.surface.create_entity({
+  name = "linked-belt",
+  position = chest_position,
+  force = player.force })
+entity.name_tag = "FCTteam"`;
+
+        const originalCode2 = `/c
+local player = game.players[1]
+local position = player.position
+local offset = {x = 0, y = -1}
+local chest_position = {x = position.x + offset.x, y = position.y + offset.y}
+local entity = player.surface.create_entity({
+  name = "linked-belt",
+  position = chest_position,
+  force = player.force })
+entity.name_tag = "FCTteam"`;
+
+        const originalCode3 = `/c
+local i = game.get_entity_by_tag('FCTteam1')
+local o = game.get_entity_by_tag('FCTteam2')
+i.linked_belt_type = 'input'
+o.linked_belt_type = 'output'
+i.connect_linked_belts(o)`;
+
+        nameInput1.addEventListener('input', () => {
+            const updatedCode1 = originalCode1.replace(/entity\.name_tag = ".*?"/, `entity.name_tag = "${nameInput1.value}"`);
+            codeArea1.value = updatedCode1;
+            updateCombinedCode();
+        });
+
+        copyButton1.addEventListener('click', () => {
+            codeArea1.select();
+            document.execCommand('copy');
+            alert('Конвейер погрузки [1] Скопирован!');
+        });
+
+        nameInput2.addEventListener('input', () => {
+            const updatedCode2 = originalCode2.replace(/entity\.name_tag = ".*?"/, `entity.name_tag = "${nameInput2.value}"`);
+            codeArea2.value = updatedCode2;
+            updateCombinedCode();
+        });
+
+        copyButton2.addEventListener('click', () => {
+            codeArea2.select();
+            document.execCommand('copy');
+            alert('Конвейер разгрузки [2] Скопирован!');
+        });
+
+        function updateCombinedCode() {
+            const combinedCode = originalCode3
+                .replace(/'FCTteam1'/, `'${nameInput1.value || "FCTteam1"}'`)
+                .replace(/'FCTteam2'/, `'${nameInput2.value || "FCTteam2"}'`);
+            codeArea3.value = combinedCode;
+        }
+
+        copyButton3.addEventListener('click', () => {
+            codeArea3.select();
+            document.execCommand('copy');
+            alert('Код обьеденения скопирован');
+        });
+    </script>
+<div style= "text-align: right; font-size: 0.8em; line-height: 0.4; opacity: 0.8;" > 
+    <p>🐞YouTube: <a href="https://www.youtube.com/@FCT-Ostin" target="_blank">ссылка</a></p>
+    <p>💙Telegram: <a href="https://t.me/FCTostin" target="_blank">ссылка</a></p>
+    <p>🎮Steam Группа: <a href="https://steamcommunity.com/groups/FCTgroup" target="_blank">ссылка</a></p>
+    <p>🕹️Patreon: <a href="https://www.patreon.com/c/OstinFCT" target="_blank">ссылка</a></p>
+    <p>🪐Boosty: <a href="https://boosty.to/ostinfct" target="_blank">ссылка</a></p>
+</div>
+</body>
+</html>
